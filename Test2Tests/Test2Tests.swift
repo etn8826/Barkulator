@@ -7,7 +7,7 @@
 //
 
 import XCTest
-@testable import Test2
+@testable import Barkulator
 
 class Test2Tests: XCTestCase {
 
@@ -29,6 +29,56 @@ class Test2Tests: XCTestCase {
         self.measure {
             // Put the code you want to measure the time of here.
         }
+    }
+
+    func testStoreValue() {
+        let sut = ViewController()
+        sut.value1 = 0.0
+        sut.value2 = 0.0
+        sut.computationTextView.text = "10.0"
+        sut.storeValue()
+        XCTAssert(sut.value1 == 10.0 && sut.value2 == 0.0)
+        
+        sut.computationTextView.text = "5.0"
+        sut.storeValue()
+        XCTAssert(sut.value1 == 10.0 && sut.value2 == 5.0)
+        
+        sut.computationTextView.text = "2.0"
+        sut.storeValue()
+        XCTAssert(sut.value1 == 2.0 && sut.value2 == 0.0)
+    }
+    
+    func testCalculations() {
+        let sut = ViewController()
+        sut.value1 = 10.0
+        sut.value2 = 2.0
+        
+        sut.functionLabel.text = "+"
+        sut.calculations()
+        XCTAssert(sut.total == 12.0)
+        
+        sut.functionLabel.text = "-"
+        sut.calculations()
+        XCTAssert(sut.total == 8.0)
+        
+        sut.functionLabel.text = "x"
+        sut.calculations()
+        XCTAssert(sut.total == 20.0)
+        
+        sut.functionLabel.text = "/"
+        sut.calculations()
+        XCTAssert(sut.total == 5.0)
+    }
+    
+    func testInvertValue() {
+        let sut = ViewController()
+        sut.computationTextView.text = "10.0"
+        
+        sut.invertValue()
+        XCTAssert(sut.computationTextView.text == "-10.0")
+        
+        sut.invertValue()
+        XCTAssert(sut.computationTextView.text == "10.0")
     }
 
 }

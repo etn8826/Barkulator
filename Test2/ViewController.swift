@@ -63,6 +63,7 @@ class ViewController: UIViewController {
     }
     
     func setupViews() {
+        // Setup UI and constraints for view
         num1.setTitle("1", for: .normal)
         num2.setTitle("2", for: .normal)
         num3.setTitle("3", for: .normal)
@@ -83,14 +84,13 @@ class ViewController: UIViewController {
         backspaceFunc.setTitle("<-", for: .normal)
         clearFunc.setTitle("C", for: .normal)
         clearAllFunc.setTitle("CE", for: .normal)
-        
+
         computationTextView.backgroundColor = .clear
         computationTextView.font = UIFont(name: "Courier-Bold", size: 50)
         computationTextView.textColor = .brown
         computationTextView.isUserInteractionEnabled = false
         computationTextView.textAlignment = .center
         computationTextView.adjustsFontSizeToFitWidth = true
-        //        computationTextView.text = "199839987498237492837423987"
         
         functionLabel.backgroundColor = .clear
         functionLabel.font = UIFont(name: "Courier-Bold", size: 70)
@@ -257,28 +257,31 @@ class ViewController: UIViewController {
     }
     
     func addActionToButton(button: PawButton) {
+        //Setup button actions
         button.addTarget(self, action: #selector(buttonTapped(_:)), for: .touchUpInside)
     }
     
     @objc func buttonTapped(_ sender: PawButton) {
         sender.buttonShake()
+
         do {
             audioPlayer = try AVAudioPlayer(contentsOf: url!)
             audioPlayer.play()
         } catch {
-            // couldn't load file :(
+            print("couldn't load file :(")
         }
+
         if let value = sender.titleLabel?.text {
             if value.isNumeric {
                 if ((computationTextView.text?.rangeOfCharacter(from: CharacterSet(charactersIn: "."))) != nil) && value == "." {
                     return
                 }
-                
+
                 if didSelectFunction {
                     computationTextView.text = ""
                     didSelectFunction = false
                 }
-                
+
                 computationTextView.text = ((computationTextView.text ?? "") + value)
             } else if (!value.isNumeric && computationTextView.text != nil) {
                 switch value.function {

@@ -21,16 +21,12 @@ class PawButton: UIButton {
     }
     
     func setupButton() {
-//        setShadow()
         setBackgroundImage(UIImage(named: "paw"), for: .normal)
         setBackgroundImage(UIImage(named: "paw"), for: .highlighted)
         setTitleColor(.brown, for: .normal)
         titleLabel?.font    = UIFont(name: "Courier-Bold", size: 40)
         contentVerticalAlignment = .bottom
         isUserInteractionEnabled = true
-//        layer.cornerRadius  = 25
-//        layer.borderWidth   = 3.0
-//        layer.borderColor   = UIColor.darkGray.cgColor
     }
     
     private func setShadow() {
